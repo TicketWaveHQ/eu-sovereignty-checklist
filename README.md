@@ -16,6 +16,7 @@ without asking. Attribution is welcome but not required.
 ## Table of contents
 
 - [Why this exists](#why-this-exists)
+- [Used in production](#used-in-production)
 - [The five principles](#the-five-principles)
   - [Principle 1 — EEA/UK-sovereign by default](#principle-1--eeauk-sovereign-by-default)
   - [Principle 2 — Region pinning is explicit](#principle-2--region-pinning-is-explicit)
@@ -23,6 +24,7 @@ without asking. Attribution is welcome but not required.
   - [Principle 4 — Quarterly verification](#principle-4--quarterly-verification)
   - [Principle 5 — Documented exceptions](#principle-5--documented-exceptions)
 - [Using the script](#using-the-script)
+- [Reference implementation](#reference-implementation)
 - [What the script checks](#what-the-script-checks)
 - [Tailoring the script](#tailoring-the-script)
 - [What this is not](#what-this-is-not)
@@ -49,6 +51,12 @@ you toward keeping that data in the EEA or the UK by default:
    simpler than managing them.
 
 This repo is what I codify around those three forces.
+
+---
+
+## Used in production
+
+The methodology behind the sovereignty posture of [ticketwavehq.com](https://ticketwavehq.com), [ukwebmarketing.com](https://ukwebmarketing.com), and [brothersylvester.com](https://brothersylvester.com), whose public [data-processors list](https://brothersylvester.com/data-processors) reflects it.
 
 ---
 
@@ -171,6 +179,12 @@ fully-passing run looks like.
 
 ---
 
+## Reference implementation
+
+See how [site-templates](https://github.com/sansware/site-templates) deploys with these constraints.
+
+---
+
 ## What the script checks
 
 | # | Check | Principle |
@@ -231,6 +245,8 @@ production UK SaaS stacks. More at [ukwebmarketing.com/jordan](https://ukwebmark
 Tag [@sansware](https://github.com/sansware) on PRs and issues for review.
 For security issues, see [`SECURITY.md`](SECURITY.md). For contribution
 guidelines, see [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+By [Jordan Gilbert](https://github.com/sansware).
 
 ---
 
