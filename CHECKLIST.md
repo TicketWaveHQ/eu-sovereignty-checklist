@@ -71,6 +71,62 @@ console settings, vendor attestations, signed DPAs).
 
 ---
 
+## 1b. Self-hosted and dedicated infrastructure
+
+Skip this section if everything you run is managed SaaS. Include it if any part
+of your stack is software you administer on rented compute — that pattern gives
+you stronger sovereignty guarantees than a managed platform, but the burden of
+proving them moves to you.
+
+- [ ] **Every server's physical location is recorded**, not just its provider.
+      "Hetzner" is not a region; Helsinki and Falkenstein are. A provider with
+      EEA headquarters can still place your workload outside the EEA
+- [ ] **The provider's data processing agreement is signed and held**, not
+      merely available. Note the date and where the countersigned copy lives
+- [ ] **Backups are encrypted before leaving the host.** If the backup target is
+      a different provider or a different jurisdiction, the encryption boundary
+      is what makes that acceptable — the provider holds ciphertext it cannot
+      read. Record who holds the key
+- [ ] **The backup provider's region is pinned and recorded separately** from
+      the compute region. These drift independently
+- [ ] **Restores are tested, with the date of the last successful test.** An
+      untested backup is a claim, not a control
+- [ ] **Self-hosted application software is listed as software, not as a
+      processor.** If you run it yourself, the vendor receives nothing in normal
+      operation and is not an Article 28 sub-processor — say so explicitly
+      rather than omitting them, because omission reads as an oversight
+- [ ] **Administrative access paths are documented**: who can reach the host,
+      by what mechanism, and what happens when that person is unavailable
+- [ ] **Outbound mail from the host has a named provider and region.** Servers
+      that send email quietly acquire a sub-processor
+
+## 1c. AI and inference
+
+Required if any model touches personal data, and increasingly asked for even
+where it does not.
+
+- [ ] **Inference region is recorded, not just storage region.** EU data
+      residency and EU processing are different claims. A model hosted outside
+      the EEA processes the prompt wherever it runs, whatever the database does
+- [ ] **Model provider retention and training terms are recorded** per model:
+      what is retained, for how long, and whether inputs may train the model.
+      Zero-retention mitigates retention, not location
+- [ ] **Each model has a review or sunset date.** Providers deprecate versions
+      and change terms; an unreviewed model is an unreviewed transfer
+- [ ] **Provider or deployer role assessed explicitly.** Integrating a
+      third-party foundation model does not automatically make you a GPAI
+      provider under the EU AI Act — assess your actual role and any
+      modifications, and record the conclusion
+- [ ] **Article 50 transparency.** Where users interact with an AI system,
+      disclosure is designed in. Where content is AI-generated or manipulated,
+      marking is supported. Treat these as operational rather than forthcoming
+- [ ] **Automated decisions documented** as solely or partly automated, with
+      human review that can in practice reach a different outcome. A reviewer
+      who cannot change the answer is not oversight
+- [ ] **High-impact uses flagged for separate review** — employment, biometric
+      or surveillance, tenant screening, credit. These carry obligations beyond
+      data residency and should not be quietly inside a general AI section
+
 ## 2. Authentication
 
 - [ ] Auth provider is EU-resident (Supabase Auth EU project, Clerk EU

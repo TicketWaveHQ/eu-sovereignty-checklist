@@ -1,5 +1,28 @@
 # Changelog
 
+## 2026-09-16
+
+Added two sections.
+
+**1b — Self-hosted and dedicated infrastructure.** The checklist assumed a
+managed-SaaS stack throughout: Vercel, a managed database, hosted error
+monitoring. That pattern is common but it is not the only one, and self-hosting
+on rented compute gives stronger sovereignty guarantees while moving the burden
+of proof onto the operator. The new section covers what that burden actually is
+— physical location recorded rather than provider, signed DPAs held rather than
+merely available, the encryption boundary on backups crossing jurisdictions,
+restore tests with dates, and the distinction between software you run and a
+processor you send data to.
+
+**1c — AI and inference.** The checklist had nothing on AI at all, which is no
+longer tenable in an EU sovereignty document. Inference region is a separate
+claim from storage region, and the EU AI Act's Article 50 transparency
+obligations are operational rather than forthcoming. Includes the provider
+versus deployer distinction, because integrating a foundation model does not
+automatically make you a GPAI provider, and most teams assume one answer without
+checking which applies.
+
+
 All notable changes to this project are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
