@@ -1,8 +1,8 @@
 # EU/UK Sovereignty Checklist
 
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](LICENSE)
-[![Last commit](https://img.shields.io/github/last-commit/sansware/eu-sovereignty-checklist)](https://github.com/sansware/eu-sovereignty-checklist/commits/main)
-[![Contributors](https://img.shields.io/github/contributors/sansware/eu-sovereignty-checklist)](https://github.com/sansware/eu-sovereignty-checklist/graphs/contributors)
+[![Last commit](https://img.shields.io/github/last-commit/TicketWaveHQ/eu-sovereignty-checklist)](https://github.com/TicketWaveHQ/eu-sovereignty-checklist/commits/main)
+[![Contributors](https://img.shields.io/github/contributors/TicketWaveHQ/eu-sovereignty-checklist)](https://github.com/TicketWaveHQ/eu-sovereignty-checklist/graphs/contributors)
 
 A practical, opinionated checklist plus a verification script for keeping a
 UK/EU SaaS on **EEA/UK-sovereign infrastructure**. This is the exact
@@ -56,7 +56,7 @@ This repo is what I codify around those three forces.
 
 ## Used in production
 
-The methodology behind the sovereignty posture of [ticketwavehq.com](https://ticketwavehq.com), [ukwebmarketing.com](https://ukwebmarketing.com), and [brothersylvester.com](https://brothersylvester.com), whose public [data-processors list](https://brothersylvester.com/data-processors) reflects it.
+The methodology behind the sovereignty posture of the TicketWave HQ estate: [ticketwavehq.com](https://ticketwavehq.com), whose public [data-processors register](https://ticketwavehq.com/data-processors) reflects it, and the brand sites [veryseoly.com](https://veryseoly.com), [jortech.co.uk](https://www.jortech.co.uk) and [dacros.com](https://dacros.com).
 
 ---
 
@@ -181,7 +181,7 @@ fully-passing run looks like.
 
 ## Reference implementation
 
-See how [site-templates](https://github.com/sansware/site-templates) deploys with these constraints.
+See how TicketWave HQ applies these constraints to its own estate, exceptions included, at [ticketwavehq.com/sovereignty](https://ticketwavehq.com/sovereignty).
 
 ---
 
@@ -240,7 +240,7 @@ edited. Common adjustments:
 
 Maintained by **Jordan Gilbert** ([@sansware](https://github.com/sansware)) —
 the engineer who codified this checklist while running it quarterly on
-production UK SaaS stacks. More at [ukwebmarketing.com/jordan](https://ukwebmarketing.com/jordan).
+production UK SaaS stacks. More at [access.ticketwavehq.com/author/jordan-gilbert](https://access.ticketwavehq.com/author/jordan-gilbert).
 
 Tag [@sansware](https://github.com/sansware) on PRs and issues for review.
 For security issues, see [`SECURITY.md`](SECURITY.md). For contribution

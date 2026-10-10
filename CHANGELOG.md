@@ -62,5 +62,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `LICENSE` — CC BY 4.0 (summary prose; replaced with legalcode in the
   unreleased entry above).
 
-[Unreleased]: https://github.com/sansware/eu-sovereignty-checklist/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/sansware/eu-sovereignty-checklist/releases/tag/v1.0.0
+[Unreleased]: https://github.com/TicketWaveHQ/eu-sovereignty-checklist/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/TicketWaveHQ/eu-sovereignty-checklist/releases/tag/v1.0.0
