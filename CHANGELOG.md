@@ -33,7 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - `SECURITY.md` — coordinated disclosure policy with 90-day cadence,
-  routing to `security@brothersylvester.com`.
+  routing to `security@sansware.tech`.
 - `CODE_OF_CONDUCT.md` — Contributor Covenant 2.1.
 - `CONTRIBUTING.md` — short contributor guide.
 - `CHANGELOG.md` — this file.
@@ -44,6 +44,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `LICENSE` — replaced summary prose with the canonical CC BY 4.0
   legalcode so GitHub recognises the licence as `CC-BY-4.0` rather than
   `NOASSERTION`.
+
+### Fixed
+
+- `README.md` — said attribution was optional. CC BY 4.0 requires it
+  (credit, a link to the licence, and a note of any changes); the README
+  now says so and gives a credit line that meets all three.
+- `CHANGELOG.md` — named the security contact that #3 replaced.
 
 ## [1.0.0] — 2026-06-25
 
