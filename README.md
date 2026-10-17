@@ -8,8 +8,9 @@ A practical, opinionated checklist plus a verification script for keeping a
 UK/EU SaaS on **EEA/UK-sovereign infrastructure**. This is the exact
 methodology and script I run quarterly on production stacks.
 
-Published under **CC BY 4.0** so you can lift it, edit it, and use it
-without asking. Attribution is welcome but not required.
+Published under **CC BY 4.0** so you can lift it, edit it, and use it,
+commercially too, without asking. In return the licence asks for credit:
+name the source, link the licence, and say if you changed it.
 
 ---
 
@@ -254,5 +255,10 @@ By [Jordan Gilbert](https://github.com/sansware).
 
 [Creative Commons Attribution 4.0 International (CC BY 4.0)](LICENSE).
 
-You may copy, adapt, and use commercially. Attribution to this repo is
-appreciated but not required.
+You may copy, adapt, and use it commercially, provided you give
+appropriate credit, link to the licence, and indicate if you made changes
+(section 3(a) of the licence). A credit line that does all three:
+
+> Adapted from the [EU/UK Sovereignty Checklist](https://github.com/TicketWaveHQ/eu-sovereignty-checklist)
+> by Jordan Gilbert, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+> Changes: (say what you changed).
