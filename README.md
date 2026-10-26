@@ -19,11 +19,11 @@ name the source, link the licence, and say if you changed it.
 - [Why this exists](#why-this-exists)
 - [Used in production](#used-in-production)
 - [The five principles](#the-five-principles)
-  - [Principle 1 — EEA/UK-sovereign by default](#principle-1--eeauk-sovereign-by-default)
-  - [Principle 2 — Region pinning is explicit](#principle-2--region-pinning-is-explicit)
-  - [Principle 3 — Sub-processor disclosure](#principle-3--sub-processor-disclosure)
-  - [Principle 4 — Quarterly verification](#principle-4--quarterly-verification)
-  - [Principle 5 — Documented exceptions](#principle-5--documented-exceptions)
+  - [Principle 1: EEA/UK-sovereign by default](#principle-1-eeauk-sovereign-by-default)
+  - [Principle 2: Region pinning is explicit](#principle-2-region-pinning-is-explicit)
+  - [Principle 3: Sub-processor disclosure](#principle-3-sub-processor-disclosure)
+  - [Principle 4: Quarterly verification](#principle-4-quarterly-verification)
+  - [Principle 5: Documented exceptions](#principle-5-documented-exceptions)
 - [Using the script](#using-the-script)
 - [Reference implementation](#reference-implementation)
 - [What the script checks](#what-the-script-checks)
@@ -42,8 +42,8 @@ you toward keeping that data in the EEA or the UK by default:
 1. **UK GDPR compliance.** An EEA/UK-only sub-processor mix removes the
    complexity of cross-border transfer mechanisms (UK IDTA, SCCs, adequacy
    decisions) and reduces the surface for compliance failures.
-2. **Procurement.** UK public-sector buyers — schools, councils, MATs,
-   universities, NHS trusts, charities — increasingly require named
+2. **Procurement.** UK public-sector buyers - schools, councils, MATs,
+   universities, NHS trusts, charities - increasingly require named
    EEA/UK-only data flows in supplier questionnaires. A sovereign posture
    wins more procurement responses.
 3. **Optionality and resilience.** US CLOUD Act, FISA 702, and evolving
@@ -67,44 +67,44 @@ Each is a rule, not an aspiration. The script in this repo verifies most
 of them mechanically; the rest are checklist items you confirm in
 admin dashboards.
 
-### Principle 1 — EEA/UK-sovereign by default
+### Principle 1: EEA/UK-sovereign by default
 
 Every sub-processor that processes identifying personal data must, by
 default, host that processing in the EEA or the UK. Any exception is
 justified in writing, listed on the public sub-processor disclosure
 page, and reviewed quarterly.
 
-### Principle 2 — Region pinning is explicit
+### Principle 2: Region pinning is explicit
 
 It is not enough that a vendor *"supports"* EU regions. Every vendor's
 specific region is **explicitly configured**, **documented**, and
-**verifiable** — via response trace headers, account settings
+**verifiable** - via response trace headers, account settings
 screenshots, vendor admin console confirmations, or both. The script
 in this repo checks the configuration files; you check the admin
 consoles.
 
 Examples of explicit region pinning the script verifies:
 
-- `vercel.json` includes `"regions": ["lhr1"]` (London) — pin the
+- `vercel.json` includes `"regions": ["lhr1"]` (London) - pin the
   function execution region rather than relying on Vercel's default
   region selection.
-- Sentry config files reference `*.de.sentry.io` (Frankfurt) — using
+- Sentry config files reference `*.de.sentry.io` (Frankfurt) - using
   the EU SaaS host, not the US default at `sentry.io`.
 - Supabase project URL is present (the project region you confirm in
-  the Supabase dashboard — the URL itself does not encode region).
+  the Supabase dashboard - the URL itself does not encode region).
 - CSP `connect-src` includes `ingest.de.sentry.io` and does not include
   the US default `ingest.sentry.io`.
 
-### Principle 3 — Sub-processor disclosure
+### Principle 3: Sub-processor disclosure
 
 A live sub-processor list is published at a stable URL (e.g.
 `/sub-processors` or `/data-processors`). The list is updated within
-**7 days** of any change. Material changes — new sub-processor
-processing identifying data, region change, regulator change — are
+**7 days** of any change. Material changes - new sub-processor
+processing identifying data, region change, regulator change - are
 notified to subscribers and posted on the public page **30 days before
 they take effect**.
 
-### Principle 4 — Quarterly verification
+### Principle 4: Quarterly verification
 
 Every quarter, the operator runs `node verify-sovereignty.mjs` and
 pastes the output into the quarterly access review record. Drift is
@@ -113,12 +113,12 @@ January) verifies each active sub-processor against the previous
 year's attestation freshness, region pinning, and continued mission
 alignment.
 
-### Principle 5 — Documented exceptions
+### Principle 5: Documented exceptions
 
 Two areas are typically acceptable exceptions in practice:
 
 - **Edge/CDN providers** (e.g. Cloudflare). Personal data is not
-  persisted at the edge — only TLS metadata and WAF challenge events
+  persisted at the edge - only TLS metadata and WAF challenge events
   transit. Region-agnostic by nature; documented under the principle
   rather than replaced.
 - **Payment processors with EU entities** (e.g. Stripe Payments Europe
@@ -129,7 +129,7 @@ Two areas are typically acceptable exceptions in practice:
   the exception threshold.
 
 Document the exceptions in writing. Show them to institutional buyers
-who ask. Do **not** weaponise sovereignty as a marketing wedge — it is
+who ask. Do **not** weaponise sovereignty as a marketing wedge - it is
 shown, not sold.
 
 ---
@@ -194,15 +194,15 @@ See how TicketWave HQ applies these constraints to its own estate, exceptions in
 | 2 | All Sentry config files reference `*.de.sentry.io` | 2 |
 | 3 | Supabase project URL is set (reminder to confirm region in dashboard) | 2 |
 | 4 | Public sub-processor disclosure page mentions sovereignty posture | 3 |
-| 5 | Privacy page is current — names current auth provider, no stale residue | 3 |
+| 5 | Privacy page is current - names current auth provider, no stale residue | 3 |
 | 6 | `SECURITY.md` (vulnerability disclosure policy) present | 3 |
-| 7 | GDPR Article 20 — data portability endpoint exists | — |
-| 8 | GDPR Article 17 — account deletion endpoint exists | — |
+| 7 | GDPR Article 20 - data portability endpoint exists | - |
+| 8 | GDPR Article 17 - account deletion endpoint exists | - |
 | 9 | CSP `connect-src` targets Sentry EU host only | 2 |
-| 10 | `X-Frame-Options: DENY` is set | — |
+| 10 | `X-Frame-Options: DENY` is set | - |
 
 The script is intentionally focused on **infrastructure configuration**
-that affects sovereignty — not the broader compliance posture (DPIAs,
+that affects sovereignty - not the broader compliance posture (DPIAs,
 DSAR logging, etc.). For the wider checklist see [`CHECKLIST.md`](CHECKLIST.md).
 
 ---
@@ -220,7 +220,7 @@ edited. Common adjustments:
 - Change `privacyMustMention` / `privacyMustNotMention` to flag any
   vendor you have migrated away from (e.g. ensure the privacy page no
   longer mentions a deprecated auth provider).
-- Add new checks following the same pattern — each is a `try`/`catch`
+- Add new checks following the same pattern - each is a `try`/`catch`
   around a file read with a `record(...)` call.
 
 ---
@@ -239,9 +239,9 @@ edited. Common adjustments:
 
 ## Maintainer
 
-Maintained by **Jordan Gilbert** ([@sansware](https://github.com/sansware)) —
+Maintained by **Jordan Gilbert** ([@sansware](https://github.com/sansware)),
 the engineer who codified this checklist while running it quarterly on
-production UK SaaS stacks. More at [access.ticketwavehq.com/author/jordan-gilbert](https://access.ticketwavehq.com/author/jordan-gilbert).
+production UK SaaS stacks. More at [veryseoly.com/jordan](https://veryseoly.com/jordan).
 
 Tag [@sansware](https://github.com/sansware) on PRs and issues for review.
 For security issues, see [`SECURITY.md`](SECURITY.md). For contribution
