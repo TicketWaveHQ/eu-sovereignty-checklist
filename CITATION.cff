@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use or adapt this work, please cite it as below."
+title: "EU/UK Sovereignty Checklist"
+abstract: "A checklist and verification script for keeping a UK/EU service on EEA-sovereign infrastructure: the methodology TicketWave HQ runs quarterly on its own production stacks. CC BY 4.0."
+type: software
+authors:
+  - family-names: Gilbert
+    given-names: Jordan
+    alias: sansware
+    affiliation: "TicketWave HQ Ltd"
+    website: "https://veryseoly.com/jordan"
+contact:
+  - name: "TicketWave HQ Ltd"
+    website: "https://ticketwavehq.com"
+    email: hello@ticketwavehq.com
+repository-code: "https://github.com/TicketWaveHQ/eu-sovereignty-checklist"
+url: "https://ticketwavehq.com/sovereignty"
+license: CC-BY-4.0
+date-released: "2026-06-25"
+keywords:
+  - audit-methodology
+  - checklist
+  - compliance
+  - compliance-automation
+  - data-protection
+  - data-sovereignty
+  - eea-hosting
+  - eu-sovereignty
+  - gdpr
+  - open-source
+  - region-pinning
+  - sub-processors
