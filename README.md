@@ -9,8 +9,8 @@ zero-dependency Node.js script ([`verify-sovereignty.mjs`](verify-sovereignty.mj
 for keeping a UK/EU SaaS on **EEA/UK-sovereign infrastructure**. The script
 checks what can be checked from your repository (region pins, EU telemetry
 hosts, disclosure pages, GDPR endpoints, headers); the checklist covers the
-rest (admin consoles, signed DPAs, vendor attestations). This is the exact
-methodology and script I run quarterly on production stacks.
+rest (admin consoles, signed DPAs, vendor attestations). Run it quarterly,
+and whenever a vendor or a region changes.
 
 **Who it is for:** engineers and operators of a UK or EU service that
 processes personal data, who need to show (to a customer, a procurement

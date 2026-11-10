@@ -1,12 +1,12 @@
 cff-version: 1.2.0
 message: "If you use or adapt this work, please cite it as below."
 title: "EU/UK Sovereignty Checklist"
-abstract: "A checklist and verification script for keeping a UK/EU service on EEA-sovereign infrastructure: the methodology TicketWave HQ runs quarterly on its own production stacks. CC BY 4.0."
+abstract: "A checklist and verification script for keeping a UK/EU service on EEA-sovereign infrastructure. CC BY 4.0."
 type: software
 authors:
   - family-names: Gilbert
     given-names: Jordan
-    alias: sansware
+    alias: eu-jordangilbert
     affiliation: "TicketWave HQ Ltd"
     website: "https://veryseoly.com/jordan"
 contact:

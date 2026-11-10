@@ -79,7 +79,7 @@ you stronger sovereignty guarantees than a managed platform, but the burden of
 proving them moves to you.
 
 - [ ] **Every server's physical location is recorded**, not just its provider.
-      "Hetzner" is not a region; Helsinki and Falkenstein are. A provider with
+      "Hetzner" is not a region; Helsinki and Nuremberg are. A provider with
       EEA headquarters can still place your workload outside the EEA
 - [ ] **The provider's data processing agreement is signed and held**, not
       merely available. Note the date and where the countersigned copy lives
