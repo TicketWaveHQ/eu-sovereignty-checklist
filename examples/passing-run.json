@@ -2,7 +2,6 @@
   "passed": 12,
   "failed": 0,
   "total": 12,
-  "runDate": "2026-06-25T09:00:00.000Z",
   "results": [
     {
       "name": "Vercel region pinned to lhr1",
@@ -27,7 +26,7 @@
     {
       "name": "Supabase project URL present in .env.local",
       "ok": true,
-      "detail": "project ref = examplexyz (verify region in Supabase dashboard — must be eu-west-2)"
+      "detail": "project ref = examplexyz (verify region in Supabase dashboard: must be eu-west-2)"
     },
     {
       "name": "app/data-processors/page.js mentions sovereignty posture",
@@ -64,5 +63,6 @@
       "ok": true,
       "detail": "set to DENY"
     }
-  ]
+  ],
+  "runDate": "2026-11-10T21:26:10.125Z"
 }

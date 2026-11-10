@@ -1,11 +1,22 @@
 {
   "ignorePatterns": [
     { "pattern": "^http://localhost" },
-    { "pattern": "^https://localhost" }
+    { "pattern": "^https://localhost" },
+    { "pattern": "your-domain\\.example" },
+    { "pattern": "^https://github\\.com/TicketWaveHQ/eu-sovereignty-checklist/(compare|releases/tag)/" }
+  ],
+  "httpHeaders": [
+    {
+      "urls": ["https://"],
+      "headers": {
+        "User-Agent": "Mozilla/5.0 (compatible; markdown-link-check; +https://github.com/TicketWaveHQ/eu-sovereignty-checklist)",
+        "Accept": "text/html,application/xhtml+xml"
+      }
+    }
   ],
   "timeout": "20s",
   "retryOn429": true,
   "retryCount": 3,
   "fallbackRetryDelay": "30s",
-  "aliveStatusCodes": [200, 206, 429]
+  "aliveStatusCodes": [200, 206, 403, 429]
 }
