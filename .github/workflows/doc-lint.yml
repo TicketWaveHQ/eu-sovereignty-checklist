@@ -1,27 +1,85 @@
 name: Doc lint
 
+# Three checks, no secrets, no deploy:
+#  - Markdown links still resolve. The only check that touches the network,
+#    so it also runs weekly to catch link rot between commits.
+#  - House style: no em-dashes in anything a reader sees.
+#  - The verification script passes against the fixture in
+#    examples/passing-project and fails against an empty project.
+
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
   schedule:
+    # 00:00 UTC every Sunday.
     - cron: "0 0 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   markdown-link-check:
     name: Check markdown links
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    permissions:
-      contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        uses: actions/checkout@v7
 
+      # Some sites answer requests from CI runners with 403, so the config
+      # accepts 403 and 429 as alive. 404, 410, 5xx and DNS failures still fail.
       - name: Check markdown links
-        uses: gaurav-nelson/github-action-markdown-link-check@5c5dfc0ac2e225883c0e5f03a85311ec2830d368 # v1
+        uses: tcort/github-action-markdown-link-check@v1
         with:
           use-quiet-mode: "yes"
           use-verbose-mode: "yes"
           config-file: ".github/markdown-link-check.json"
+
+  house-style:
+    name: House style (no em-dashes)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Fail on em-dash characters
+        run: |
+          if grep -rnP "\x{2014}" --exclude-dir=.git \
+              --include='*.md' --include='*.mjs' --include='*.js' \
+              --include='*.json' --include='*.yml' --include='*.cff' .; then
+            echo "::error::Found em-dash characters (U+2014). Use a comma, a colon or a hyphen instead."
+            exit 1
+          fi
+          echo "No em-dashes found."
+
+  verify-script:
+    name: Verification script
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+
+      - name: Syntax check
+        run: node --check verify-sovereignty.mjs
+
+      - name: Passes against the fixture project
+        run: SOVEREIGNTY_ROOT=examples/passing-project node verify-sovereignty.mjs
+
+      - name: Fails against an empty project
+        run: |
+          mkdir -p "$RUNNER_TEMP/empty"
+          if SOVEREIGNTY_ROOT="$RUNNER_TEMP/empty" node verify-sovereignty.mjs; then
+            echo "::error::The script passed against an empty project."
+            exit 1
+          fi
+          echo "Failed as expected."

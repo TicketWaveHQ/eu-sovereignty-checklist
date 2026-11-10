@@ -15,19 +15,25 @@
 // Usage:
 //   node scripts/verify-sovereignty.mjs
 //   CI=1 node scripts/verify-sovereignty.mjs   # CI mode: skips .env.local checks
+//   SOVEREIGNTY_ROOT=/path/to/project node verify-sovereignty.mjs
+//   SOVEREIGNTY_JSON=1 node scripts/verify-sovereignty.mjs   # adds JSON after ---JSON---
 //
 // Exit code 0 if all checks pass; non-zero if any check fails.
 // ═══════════════════════════════════════════════════════════
 
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
-import { dirname, join } from 'node:path'
+import { dirname, join, resolve } from 'node:path'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-// Repo root: the script lives in `scripts/` so the project root
-// is one level up. If you place the script elsewhere, adjust.
-const root = join(__dirname, '..')
+// Project root: by default the script lives in `scripts/`, so the
+// project root is one level up. Set SOVEREIGNTY_ROOT to check a
+// project somewhere else (for example the fixture in this repo:
+// SOVEREIGNTY_ROOT=examples/passing-project).
+const root = process.env.SOVEREIGNTY_ROOT
+  ? resolve(process.env.SOVEREIGNTY_ROOT)
+  : join(__dirname, '..')
 
 // ─── CONFIG ────────────────────────────────────────────────
 // Edit these to match your stack. Anything you set to `null`
@@ -51,7 +57,7 @@ const SOVEREIGNTY_CONFIG = {
   ],
 
   // Supabase env var name + expected region for the dashboard
-  // verification reminder. Region is a hint only — Supabase
+  // verification reminder. Region is a hint only: Supabase
   // project URLs do not encode region, so the operator must
   // confirm in the dashboard. Set to null to skip.
   supabaseEnvVar: 'NEXT_PUBLIC_SUPABASE_URL',
@@ -69,9 +75,9 @@ const SOVEREIGNTY_CONFIG = {
   privacyMustMention: 'Supabase Auth',
   privacyMustNotMention: 'Clerk',
 
-  // Endpoints for GDPR Article 15 (access / portability)
-  // and Article 17 (erasure). These prove the right to
-  // erasure and the right to data portability are wired.
+  // Endpoints for UK GDPR Articles 15 and 20 (access and
+  // portability) and Article 17 (erasure). These prove the
+  // right to erasure and the right to data portability are wired.
   exportEndpoint: 'app/api/account/export/route.js',
   deleteEndpoint: 'app/api/account/delete/route.js',
 
@@ -93,14 +99,14 @@ const results = []
 function record(name, ok, detail) {
   results.push({ name, ok, detail })
   const mark = ok ? 'PASS' : 'FAIL'
-  console.log(`[${mark}] ${name} — ${detail}`)
+  console.log(`[${mark}] ${name}: ${detail}`)
 }
 
 // Skip a check without recording pass/fail. Use when a check is
 // genuinely not applicable in the current environment (e.g. .env.local
-// is absent on a CI runner — that's expected, not a regression).
+// is absent on a CI runner; that is expected, not a regression).
 function skip(name, detail) {
-  console.log(`[SKIP] ${name} — skipped (${detail})`)
+  console.log(`[SKIP] ${name}: skipped (${detail})`)
 }
 
 // 1) Vercel region pinned in vercel.json
@@ -113,7 +119,7 @@ try {
     ok,
     ok
       ? `regions = ${JSON.stringify(vc.regions)}`
-      : `regions = ${JSON.stringify(vc.regions ?? 'not set')} — should include "${expected}"`,
+      : `regions = ${JSON.stringify(vc.regions ?? 'not set')}, should include "${expected}"`,
   )
 } catch (e) {
   record(`Vercel region pinned to ${SOVEREIGNTY_CONFIG.vercelRegion}`, false, `vercel.json read failed: ${e.message}`)
@@ -144,7 +150,7 @@ if (SOVEREIGNTY_CONFIG.supabaseEnvVar) {
       record(
         'Supabase project URL present in .env.local',
         true,
-        `project ref = ${match[1]} (verify region in Supabase dashboard — must be ${SOVEREIGNTY_CONFIG.supabaseExpectedRegion})`,
+        `project ref = ${match[1]} (verify region in Supabase dashboard: must be ${SOVEREIGNTY_CONFIG.supabaseExpectedRegion})`,
       )
     } else {
       record(
@@ -204,7 +210,7 @@ try {
   record('SECURITY.md present', false, 'SECURITY.md missing')
 }
 
-// 7) GDPR Article 20 — data portability endpoint exists
+// 7) GDPR Article 20: data portability endpoint exists
 try {
   readFileSync(join(root, SOVEREIGNTY_CONFIG.exportEndpoint), 'utf8')
   record('Data portability endpoint exists', true, `${SOVEREIGNTY_CONFIG.exportEndpoint} present`)
@@ -212,7 +218,7 @@ try {
   record('Data portability endpoint exists', false, `${SOVEREIGNTY_CONFIG.exportEndpoint} missing`)
 }
 
-// 8) GDPR Article 17 — account deletion endpoint exists
+// 8) GDPR Article 17: account deletion endpoint exists
 try {
   readFileSync(join(root, SOVEREIGNTY_CONFIG.deleteEndpoint), 'utf8')
   record('Account deletion endpoint exists', true, `${SOVEREIGNTY_CONFIG.deleteEndpoint} present`)
@@ -243,7 +249,7 @@ try {
   record(
     'X-Frame-Options is DENY',
     denyMatch,
-    denyMatch ? 'set to DENY' : `not DENY — check ${SOVEREIGNTY_CONFIG.nextConfigFile}`,
+    denyMatch ? 'set to DENY' : `not DENY, check ${SOVEREIGNTY_CONFIG.nextConfigFile}`,
   )
 } catch (e) {
   record('X-Frame-Options is DENY', false, `read failed: ${e.message}`)
