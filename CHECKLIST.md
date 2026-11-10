@@ -1,9 +1,9 @@
 # EU/UK Sovereignty Checklist
 
-A markdown checklist for teams who do not want to run a script — work
+A markdown checklist for teams who do not want to run a script: work
 through it quarterly and tick the boxes.
 
-For the automated version, see `verify-sovereignty.mjs` in this repo.
+For the automated version, see [`verify-sovereignty.mjs`](verify-sovereignty.mjs) in this repo.
 The two are complements: the script covers what can be verified
 mechanically from your repo; the checklist covers the rest (admin
 console settings, vendor attestations, signed DPAs).
@@ -74,7 +74,7 @@ console settings, vendor attestations, signed DPAs).
 ## 1b. Self-hosted and dedicated infrastructure
 
 Skip this section if everything you run is managed SaaS. Include it if any part
-of your stack is software you administer on rented compute — that pattern gives
+of your stack is software you administer on rented compute. That pattern gives
 you stronger sovereignty guarantees than a managed platform, but the burden of
 proving them moves to you.
 
@@ -85,7 +85,7 @@ proving them moves to you.
       merely available. Note the date and where the countersigned copy lives
 - [ ] **Backups are encrypted before leaving the host.** If the backup target is
       a different provider or a different jurisdiction, the encryption boundary
-      is what makes that acceptable — the provider holds ciphertext it cannot
+      is what makes that acceptable: the provider holds ciphertext it cannot
       read. Record who holds the key
 - [ ] **The backup provider's region is pinned and recorded separately** from
       the compute region. These drift independently
@@ -93,7 +93,7 @@ proving them moves to you.
       untested backup is a claim, not a control
 - [ ] **Self-hosted application software is listed as software, not as a
       processor.** If you run it yourself, the vendor receives nothing in normal
-      operation and is not an Article 28 sub-processor — say so explicitly
+      operation and is not an Article 28 sub-processor. Say so explicitly
       rather than omitting them, because omission reads as an oversight
 - [ ] **Administrative access paths are documented**: who can reach the host,
       by what mechanism, and what happens when that person is unavailable
@@ -115,7 +115,7 @@ where it does not.
       and change terms; an unreviewed model is an unreviewed transfer
 - [ ] **Provider or deployer role assessed explicitly.** Integrating a
       third-party foundation model does not automatically make you a GPAI
-      provider under the EU AI Act — assess your actual role and any
+      provider under the EU AI Act. Assess your actual role and any
       modifications, and record the conclusion
 - [ ] **Article 50 transparency.** Where users interact with an AI system,
       disclosure is designed in. Where content is AI-generated or manipulated,
@@ -123,7 +123,7 @@ where it does not.
 - [ ] **Automated decisions documented** as solely or partly automated, with
       human review that can in practice reach a different outcome. A reviewer
       who cannot change the answer is not oversight
-- [ ] **High-impact uses flagged for separate review** — employment, biometric
+- [ ] **High-impact uses flagged for separate review**: employment, biometric
       or surveillance, tenant screening, credit. These carry obligations beyond
       data residency and should not be quietly inside a general AI section
 
@@ -142,7 +142,7 @@ where it does not.
 
 ## 3. Edge / CDN
 
-- [ ] Cloudflare (or your CDN) does not persist personal data at edge —
+- [ ] Cloudflare (or your CDN) does not persist personal data at edge:
       only TLS termination, WAF, DDoS, caching
 - [ ] No edge functions / Cloudflare Workers persist personal data in
       Workers KV, R2, D1, or Durable Objects without an EU-pinned
@@ -157,7 +157,7 @@ where it does not.
 - [ ] Payment processor's EU entity is the contracted counterparty
       (Stripe Payments Europe Ltd, Adyen N.V., etc.)
 - [ ] Transfer to a US parent entity is governed by SCCs (UK
-      Addendum to EU SCCs, or UK IDTA) — confirm in the DPA
+      Addendum to EU SCCs, or UK IDTA); confirm in the DPA
 - [ ] Payment confirmation emails do not include card BIN ranges or
       raw card data in the body
 
@@ -182,9 +182,9 @@ where it does not.
 
 ## 6. Data subject rights
 
-- [ ] GDPR Article 15 / 20 — data access / portability endpoint exists
+- [ ] GDPR Article 15 / 20: data access / portability endpoint exists
       and returns a complete export (test it yourself once a year)
-- [ ] GDPR Article 17 — account deletion endpoint exists and actually
+- [ ] GDPR Article 17: account deletion endpoint exists and actually
       deletes all PII (test it yourself with a fresh test account)
 - [ ] DSAR log records every Article 15-22 request with timestamp,
       identifier, and outcome
@@ -226,7 +226,7 @@ For every active sub-processor:
       US parent) listed on the public disclosure page with a written
       justification under Principle 3 of your sovereignty posture
 - [ ] Exceptions reviewed annually (every January) against the
-      principles — are they still the only option?
+      principles: are they still the only option?
 
 ---
 
@@ -242,4 +242,4 @@ For every active sub-processor:
 
 ## License
 
-CC BY 4.0 — see [LICENSE](LICENSE).
+CC BY 4.0: see [LICENSE](LICENSE).

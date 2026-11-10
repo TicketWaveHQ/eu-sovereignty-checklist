@@ -1,6 +1,6 @@
 # Contributing
 
-This is a checklist; contributions welcome via PR. Tag [@sansware](https://github.com/sansware)
+This is a checklist; contributions welcome via PR. Tag [@eu-jordangilbert](https://github.com/eu-jordangilbert)
 for review.
 
 A few notes that save round-trips:
@@ -15,4 +15,4 @@ A few notes that save round-trips:
 - **Conduct.** All contributors agree to the
   [Code of Conduct](CODE_OF_CONDUCT.md).
 - **Security issues.** Do not open a public PR or issue for a
-  vulnerability — follow [`SECURITY.md`](SECURITY.md) instead.
+  vulnerability; follow [`SECURITY.md`](SECURITY.md) instead.

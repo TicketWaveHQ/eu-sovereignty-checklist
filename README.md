@@ -4,18 +4,47 @@
 [![Last commit](https://img.shields.io/github/last-commit/TicketWaveHQ/eu-sovereignty-checklist)](https://github.com/TicketWaveHQ/eu-sovereignty-checklist/commits/main)
 [![Contributors](https://img.shields.io/github/contributors/TicketWaveHQ/eu-sovereignty-checklist)](https://github.com/TicketWaveHQ/eu-sovereignty-checklist/graphs/contributors)
 
-A practical, opinionated checklist plus a verification script for keeping a
-UK/EU SaaS on **EEA/UK-sovereign infrastructure**. This is the exact
+**What it is:** a quarterly checklist ([`CHECKLIST.md`](CHECKLIST.md)) and a
+zero-dependency Node.js script ([`verify-sovereignty.mjs`](verify-sovereignty.mjs))
+for keeping a UK/EU SaaS on **EEA/UK-sovereign infrastructure**. The script
+checks what can be checked from your repository (region pins, EU telemetry
+hosts, disclosure pages, GDPR endpoints, headers); the checklist covers the
+rest (admin consoles, signed DPAs, vendor attestations). This is the exact
 methodology and script I run quarterly on production stacks.
+
+**Who it is for:** engineers and operators of a UK or EU service that
+processes personal data, who need to show (to a customer, a procurement
+questionnaire or their own board) where that data lives and which vendors
+touch it.
 
 Published under **CC BY 4.0** so you can lift it, edit it, and use it,
 commercially too, without asking. In return the licence asks for credit:
 name the source, link the licence, and say if you changed it.
 
+## 60-second start
+
+You need Node.js 18 or newer and nothing else.
+
+```bash
+git clone https://github.com/TicketWaveHQ/eu-sovereignty-checklist.git
+cd eu-sovereignty-checklist
+
+# 1. See a passing run against the bundled fixture project.
+SOVEREIGNTY_ROOT=examples/passing-project node verify-sovereignty.mjs
+
+# 2. Point it at your own project. Expect FAILs until you edit the
+#    SOVEREIGNTY_CONFIG block at the top of the script to match your stack.
+SOVEREIGNTY_ROOT=/path/to/your-project node verify-sovereignty.mjs
+```
+
+Then work through [`CHECKLIST.md`](CHECKLIST.md) for the items a script
+cannot see.
+
 ---
 
 ## Table of contents
 
+- [60-second start](#60-second-start)
 - [Why this exists](#why-this-exists)
 - [Used in production](#used-in-production)
 - [The five principles](#the-five-principles)
@@ -29,6 +58,7 @@ name the source, link the licence, and say if you changed it.
 - [What the script checks](#what-the-script-checks)
 - [Tailoring the script](#tailoring-the-script)
 - [What this is not](#what-this-is-not)
+- [Related](#related)
 - [Maintainer](#maintainer)
 - [License](#license)
 
@@ -143,11 +173,15 @@ cp verify-sovereignty.mjs /path/to/your-project/scripts/
 # Edit the SOVEREIGNTY_CONFIG block at the top of the script to match
 # your stack (file paths, expected region, env var names)
 
-# Run it
+# Run it from your project
 node scripts/verify-sovereignty.mjs
 ```
 
-Exit code is `0` if every check passes and non-zero otherwise, so you
+By default the script treats the directory above its own as the project
+root, which is right when it lives in `scripts/`. Set `SOVEREIGNTY_ROOT` to
+check a project somewhere else without copying the script.
+
+Exit code is `0` if every check passes and `1` otherwise, so you
 can wire it into CI:
 
 ```yaml
@@ -155,13 +189,19 @@ can wire it into CI:
 name: Sovereignty
 on:
   pull_request:
+  workflow_dispatch:
   schedule:
     - cron: '0 9 1 */3 *'   # quarterly: 09:00 on the 1st of every 3rd month
+permissions:
+  contents: read
 jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
       - run: CI=1 node scripts/verify-sovereignty.mjs
 ```
 
@@ -169,14 +209,15 @@ CI mode (`CI=1`) skips checks that read `.env.local`, since that file is
 expected to be absent on CI runners.
 
 For machine-readable output (e.g. piping to a dashboard), set
-`SOVEREIGNTY_JSON=1`:
+`SOVEREIGNTY_JSON=1`. The human-readable lines come first, then a
+`---JSON---` marker, then the JSON:
 
 ```bash
-SOVEREIGNTY_JSON=1 node verify-sovereignty.mjs
+SOVEREIGNTY_JSON=1 node scripts/verify-sovereignty.mjs | sed '1,/^---JSON---$/d' > sovereignty.json
 ```
 
-See [`examples/`](examples/) for sample JSON output showing what a
-fully-passing run looks like.
+See [`examples/`](examples/) for the fixture project and the JSON output of
+a fully-passing run against it.
 
 ---
 
@@ -196,13 +237,16 @@ See how TicketWave HQ applies these constraints to its own estate, exceptions in
 | 4 | Public sub-processor disclosure page mentions sovereignty posture | 3 |
 | 5 | Privacy page is current - names current auth provider, no stale residue | 3 |
 | 6 | `SECURITY.md` (vulnerability disclosure policy) present | 3 |
-| 7 | GDPR Article 20 - data portability endpoint exists | - |
-| 8 | GDPR Article 17 - account deletion endpoint exists | - |
+| 7 | GDPR Article 20: data portability endpoint exists | - |
+| 8 | GDPR Article 17: account deletion endpoint exists | - |
 | 9 | CSP `connect-src` targets Sentry EU host only | 2 |
 | 10 | `X-Frame-Options: DENY` is set | - |
 
+The Sentry check runs once per config file, so the default configuration
+records 12 results from these 10 checks.
+
 The script is intentionally focused on **infrastructure configuration**
-that affects sovereignty - not the broader compliance posture (DPIAs,
+that affects sovereignty, not the broader compliance posture (DPIAs,
 DSAR logging, etc.). For the wider checklist see [`CHECKLIST.md`](CHECKLIST.md).
 
 ---
@@ -237,17 +281,27 @@ edited. Common adjustments:
 
 ---
 
+## Related
+
+- [TicketWaveHQ/eu-sovereign-stack](https://github.com/TicketWaveHQ/eu-sovereign-stack):
+  the companion list of EEA/UK-hosted vendors, each with how to pin and verify
+  its region. That list is the *what*; this checklist is the *how*.
+- [TicketWaveHQ/uk-gdpr-dpa-templates](https://github.com/TicketWaveHQ/uk-gdpr-dpa-templates):
+  DPA and sub-processor disclosure templates for the promises this checklist
+  helps you keep.
+
+---
+
 ## Maintainer
 
-Maintained by **Jordan Gilbert** ([@sansware](https://github.com/sansware)),
+Maintained by **Jordan Gilbert** ([@eu-jordangilbert](https://github.com/eu-jordangilbert)),
 the engineer who codified this checklist while running it quarterly on
 production UK SaaS stacks. More at [veryseoly.com/jordan](https://veryseoly.com/jordan).
+Published by [TicketWave HQ Ltd](https://ticketwavehq.com) ([@TicketWaveHQ](https://github.com/TicketWaveHQ)).
 
-Tag [@sansware](https://github.com/sansware) on PRs and issues for review.
+Tag [@eu-jordangilbert](https://github.com/eu-jordangilbert) on PRs and issues for review.
 For security issues, see [`SECURITY.md`](SECURITY.md). For contribution
 guidelines, see [`CONTRIBUTING.md`](CONTRIBUTING.md).
-
-By [Jordan Gilbert](https://github.com/sansware).
 
 ---
 

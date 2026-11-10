@@ -2,11 +2,14 @@
 
 ## Reporting a vulnerability
 
-If you believe you have found a security issue in this repository — in the
-verification script, the checklist, or the example output — please report
+If you believe you have found a security issue in this repository (in the
+verification script, the checklist, or the example output), please report
 it privately rather than opening a public issue.
 
-**Contact:** [security@sansware.tech](mailto:security@sansware.tech)
+**Contact:** email [hello@ticketwavehq.com](mailto:hello@ticketwavehq.com)
+and say in the subject that it is a security report. TicketWave HQ's
+disclosure policy, which covers this repository, is at
+<https://ticketwavehq.com/security>.
 
 When reporting, please include:
 
@@ -15,30 +18,22 @@ When reporting, please include:
 - Any environment details that matter (Node.js version, OS, etc.).
 - Whether you have disclosed the issue elsewhere.
 
-## Response cadence
+## What happens next
 
-We aim to:
-
-- **Acknowledge** your report within **3 working days**.
-- **Triage** and provide an initial assessment within **10 working days**.
-- **Coordinate disclosure** on a **90-day** cadence from the date of the
-  initial report. If a fix lands sooner, we will disclose sooner; if the
-  issue is complex and a fix is genuinely not feasible within 90 days, we
-  will agree an extended timeline with the reporter in writing.
-
-We follow a **coordinated disclosure** model: the reporter and the
-maintainer agree the public-disclosure date together. We will credit
-reporters in the changelog by default, unless they ask to remain
-anonymous.
+We will acknowledge your report and say what we intend to do. We do not
+publish a response time. Please give us a reasonable window to fix the
+issue before you publish it. We will credit reporters in the changelog by
+default, unless they ask to remain anonymous.
 
 ## Scope
 
 This repository contains:
 
-- `verify-sovereignty.mjs` — a Node.js script that reads files from the
+- `verify-sovereignty.mjs`: a Node.js script that reads files from the
   caller's project directory and reports infrastructure-configuration
   findings.
-- `CHECKLIST.md`, `README.md`, and example output files — documentation.
+- `CHECKLIST.md`, `README.md`, the fixture project and example output
+  files: documentation.
 
 In-scope issues include, for example:
 
